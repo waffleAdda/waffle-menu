@@ -1,31 +1,23 @@
-// order.js
-
 document.addEventListener("DOMContentLoaded", function () {
+  alert("order.js working");
 
-  const menuItems = document.querySelectorAll(".menu-item");
-  const orderBox = document.getElementById("orderBox");
+  const items = document.querySelectorAll(".menu-item");
+  const box = document.getElementById("orderBox");
 
-  function updateOrder() {
-    let orderText = "";
-
-    menuItems.forEach(item => {
-      const checkbox = item.querySelector(".item-check");
-      const qtyInput = item.querySelector(".item-qty");
-
-      if (checkbox.checked && qtyInput.value > 0) {
-        orderText += `${checkbox.value} x${qtyInput.value}\n`;
+  function update() {
+    let text = "";
+    items.forEach(i => {
+      const c = i.querySelector(".check");
+      const q = i.querySelector(".qty");
+      if (c.checked && q.value > 0) {
+        text += c.value + " x" + q.value + "\n";
       }
     });
-
-    orderBox.value = orderText.trim();
+    box.value = text;
   }
 
-  menuItems.forEach(item => {
-    const checkbox = item.querySelector(".item-check");
-    const qtyInput = item.querySelector(".item-qty");
-
-    checkbox.addEventListener("change", updateOrder);
-    qtyInput.addEventListener("input", updateOrder);
+  items.forEach(i => {
+    i.querySelector(".check").addEventListener("change", update);
+    i.querySelector(".qty").addEventListener("input", update);
   });
-
 });
