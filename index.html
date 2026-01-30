@@ -3,28 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <title>Waffle Adda</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+
+    header {
+      background: #5a2d0c;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #ffd9b3;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .home {
+      padding: 20px;
+      text-align: center;
+      background: white;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #e65100;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .order-form {
+      background: #fff3e0;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .order-form h2 {
+      text-align: center;
+    }
+
+    .order-form input,
+    .order-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    .order-form button {
+      width: 100%;
+      padding: 12px;
+      background: #d84315;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Waffle Adda</h1>
-  <p>Fresh • Crispy • Delicious</p>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="menu.html">Menu</a>
-  </nav>
-</header>
+  <!-- HEADER -->
+  <header>
+    <h1>Waffle Adda</h1>
+    <p>Fresh • Crispy • Delicious</p>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#order">Order</a>
+    </nav>
+  </header>
 
-<section class="home">
-  <h2>Welcome to Waffle Adda</h2>
-  <p>Explore our full waffle, dessert & shake menu</p>
-  <a class="btn" href="menu.html">View Full Menu</a>
-</section>
+  <!-- HOME SECTION -->
+  <section class="home">
+    <h2>Welcome to Waffle Adda</h2>
+    <p>Explore our full waffle, dessert & shake menu</p>
+    <a class="btn" href="#order">Order Now</a>
+  </section>
 
-<footer>
-  © 2026 Waffle Adda
-</footer>
+  <!-- ORDER FORM -->
+  <section class="order-form" id="order">
+    <h2>📝 Place Your Order</h2>
+
+    <form
+      action="https://wa.me/916352481742"
+      method="get"
+      target="_blank"
+      onsubmit="
+        this.action += '?text=' + encodeURIComponent(
+          '🧇 Waffle Adda Order' + '\n\n' +
+          'Name: ' + name.value + '\n' +
+          'Phone: ' + phone.value + '\n' +
+          'Address: ' + address.value + '\n\n' +
+          'Order Details:\n' + order.value
+        );
+      "
+    >
+
+      <input type="text" name="name" placeholder="Your Name" required>
+
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+
+      <textarea name="address" placeholder="Full Delivery Address" required></textarea>
+
+      <textarea name="order" placeholder="Order Details (Item name & quantity)" required></textarea>
+
+      <button type="submit">📲 Send Order on WhatsApp</button>
+
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Waffle Adda
+  </footer>
 
 </body>
 </html>
+ 
