@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Waffle Adda Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+}
+header{
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  background:#111;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.section{
+  padding:10px;
+}
+.section h2{
+  margin:15px 0 10px;
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
+  font-size:18px;
+}
+.item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#151515;
+  margin-bottom:8px;
+  padding:8px;
+  border-radius:6px;
+}
+.item img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:6px;
+  background:#222;
+}
+.item-info{
+  flex:1;
+  margin-left:10px;
+}
+.item-name{
+  font-size:14px;
+}
+.item-price{
+  color:#00ff99;
+  font-size:13px;
+}
+.controls{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.controls button{
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:4px;
+  font-size:18px;
+  background:#333;
+  color:#fff;
+}
+.controls span{
+  min-width:18px;
+  text-align:center;
+}
+.footer{
+  position:sticky;
+  bottom:0;
+  background:#111;
+  padding:10px;
+  border-top:1px solid #333;
+}
+.total{
+  font-size:18px;
+  margin-bottom:8px;
+}
+.whatsapp{
+  width:100%;
+  padding:12px;
+  background:#25D366;
+  color:#000;
+  font-size:16px;
+  font-weight:bold;
+  border:none;
+  border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>Waffle Adda Menu</header>
+
+<div class="section" id="menu"></div>
+
+<div class="footer">
+  <div class="total">Total: ₹<span id="total">0</span></div>
+  <button class="whatsapp" onclick="orderWhatsApp()">Order on WhatsApp</button>
+</div>
+
+<script>
+const phoneNumber = "916352481742"; // +91 removed
+
+const items = [
+  // MINI WAFFLES
+  {c:"Mini Waffles", n:"Mini KitKat Crunch Waffle", p:79},
+  {c:"Mini Waffles", n:"Mini Dark Fantasy Waffle", p:79},
+  {c:"Mini Waffles", n:"Mini Milk Fantasy Waffle", p:79},
+  {c:"Mini Waffles", n:"Mini White Fantasy Waffle", p:79},
+  {c:"Mini Waffles", n:"Mini Oreo Crunch Waffle", p:79},
+  {c:"Mini Waffles", n:"Mini Triple Chocolate Waffle", p:90},
+  {c:"Mini Waffles", n:"Mini Brownie Special Waffle", p:99},
+  {c:"Mini Waffles", n:"Mini Naughty Nutella Waffle", p:99},
+  {c:"Mini Waffles", n:"Mini Lotus Biscoff Waffle", p:110},
+
+  // CLASSIC & PREMIUM
+  {c:"Classic & Premium Waffles", n:"Honey Butter Waffle", p:99},
+  {c:"Classic & Premium Waffles", n:"Buttery Maple Bliss Waffle", p:99},
+  {c:"Classic & Premium Waffles", n:"Belgian Chocolate Waffle", p:159},
+  {c:"Classic & Premium Waffles", n:"Coffee Mocha Crisps Waffle", p:149},
+  {c:"Classic & Premium Waffles", n:"Hazelnut Heaven Nutella Waffle", p:189},
+  {c:"Classic & Premium Waffles", n:"Red & White Choco Waffle", p:159},
+  {c:"Classic & Premium Waffles", n:"Ocean Cookies Crunch Waffle", p:159},
+  {c:"Classic & Premium Waffles", n:"KitKat Choco Waffle", p:179},
+  {c:"Classic & Premium Waffles", n:"Biscoff Royal Waffle", p:179},
+  {c:"Classic & Premium Waffles", n:"Black & White Chocolate Waffle", p:169},
+  {c:"Classic & Premium Waffles", n:"Chocolate Overload Waffle", p:169},
+  {c:"Classic & Premium Waffles", n:"Triple Treat Choco Waffle", p:179},
+  {c:"Classic & Premium Waffles", n:"Walnut Wonder Waffle", p:179},
+  {c:"Classic & Premium Waffles", n:"Brownie Bliss with Almond Waffle", p:259},
+  {c:"Classic & Premium Waffles", n:"Bubblegum Fantasy Waffle", p:209},
+  {c:"Classic & Premium Waffles", n:"Strawberry Swirl Waffle", p:219},
+
+  // MINI BOWLS
+  {c:"Mini Dessert Bowls", n:"Mini Classic Chocolate Bowl", p:99},
+  {c:"Mini Dessert Bowls", n:"Mini Dark Delite Chocolate Bowl", p:109},
+  {c:"Mini Dessert Bowls", n:"Mini White Delite Chocolate Bowl", p:119},
+  {c:"Mini Dessert Bowls", n:"Mini Strawberry Chocolate Bowl", p:119},
+
+  // DESSERT BOWLS
+  {c:"Dessert Bowls", n:"Classic Chocolate Bowl", p:159},
+  {c:"Dessert Bowls", n:"Dark Delite Chocolate Bowl", p:169},
+  {c:"Dessert Bowls", n:"White Delite Chocolate Bowl", p:179},
+  {c:"Dessert Bowls", n:"Triple Chocolate Bowl", p:189},
+  {c:"Dessert Bowls", n:"KitKat Chocolate Bowl", p:189},
+  {c:"Dessert Bowls", n:"Oreo Chocolate Bowl", p:189},
+  {c:"Dessert Bowls", n:"Strawberry Chocolate Bowl", p:179},
+  {c:"Dessert Bowls", n:"Biscoff Chocolate Bowl", p:199},
+
+  // SHAKES
+  {c:"Shakes & Drinks", n:"Cold Coffee", p:95},
+  {c:"Shakes & Drinks", n:"Bubblegum Bliss Shake", p:149},
+  {c:"Shakes & Drinks", n:"Strawberry Rush Shake", p:149},
+  {c:"Shakes & Drinks", n:"Oreo Shake", p:149},
+  {c:"Shakes & Drinks", n:"Belgian Choco Crush Shake", p:149},
+  {c:"Shakes & Drinks", n:"Snickers Milk Choco Shake", p:149},
+  {c:"Shakes & Drinks", n:"Coffee Mocha Madness Shake", p:149},
+  {c:"Shakes & Drinks", n:"Hazelnut Dream Nutella Shake", p:149},
+  {c:"Shakes & Drinks", n:"Blue Bliss Shake", p:149},
+  {c:"Shakes & Drinks", n:"Royal Brownie Bliss Shake", p:179},
+  {c:"Shakes & Drinks", n:"KitKat Crunch Shake", p:179},
+  {c:"Shakes & Drinks", n:"Ferrero Fantasy Shake", p:179},
+  {c:"Shakes & Drinks", n:"Biscoff Bliss Shake", p:179},
+];
+
+let cart = {};
+
+function renderMenu(){
+  const menu = document.getElementById("menu");
+  menu.innerHTML = "";
+  let current = "";
+
+  items.forEach((i,idx)=>{
+    if(i.c !== current){
+      current = i.c;
+      const h = document.createElement("h2");
+      h.textContent = i.c;
+      menu.appendChild(h);
+    }
+
+    const d = document.createElement("div");
+    d.className = "item";
+    d.innerHTML = `
+      <img src="https://via.placeholder.com/150?text=Waffle">
+      <div class="item-info">
+        <div class="item-name">${i.n}</div>
+        <div class="item-price">₹${i.p}</div>
+      </div>
+      <div class="controls">
+        <button onclick="change(${idx},-1)">−</button>
+        <span id="q${idx}">0</span>
+        <button onclick="change(${idx},1)">+</button>
+      </div>`;
+    menu.appendChild(d);
+  });
+}
+
+function change(id,delta){
+  cart[id] = (cart[id]||0)+delta;
+  if(cart[id] < 0) cart[id]=0;
+  document.getElementById("q"+id).textContent = cart[id];
+  calc();
+}
+
+function calc(){
+  let t=0;
+  for(let id in cart){
+    t += cart[id]*items[id].p;
+  }
+  document.getElementById("total").textContent = t;
+}
+
+function orderWhatsApp(){
+  let msg="Waffle Adda Order:%0A";
+  let has=false;
+  for(let id in cart){
+    if(cart[id]>0){
+      has=true;
+      msg+=`${items[id].n} x ${cart[id]} = ₹${cart[id]*items[id].p}%0A`;
+    }
+  }
+  if(!has){ alert("No item selected"); return; }
+  msg+=`%0ATotal: ₹${document.getElementById("total").textContent}`;
+  window.open(`https://wa.me/${phoneNumber}?text=${msg}`,"_blank");
+}
+
+renderMenu();
+</script>
+
+</body>
+</html>
