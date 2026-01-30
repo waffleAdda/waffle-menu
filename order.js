@@ -1,17 +1,31 @@
-function orderOnWhatsApp(itemName, price) {
-  const phoneNumber = "916352481742";
+// order.js
 
-  const message = `Hello Waffle Adda 🧇🍫
+document.addEventListener("DOMContentLoaded", function () {
 
-I want to order:
-Item: ${itemName}
-Price: ₹${price}`;
+  const menuItems = document.querySelectorAll(".menu-item");
+  const orderBox = document.getElementById("orderBox");
 
-  const url =
-    "https://wa.me/" +
-    phoneNumber +
-    "?text=" +
-    encodeURIComponent(message);
+  function updateOrder() {
+    let orderText = "";
 
-  window.open(url, "_blank");
-}
+    menuItems.forEach(item => {
+      const checkbox = item.querySelector(".item-check");
+      const qtyInput = item.querySelector(".item-qty");
+
+      if (checkbox.checked && qtyInput.value > 0) {
+        orderText += `${checkbox.value} x${qtyInput.value}\n`;
+      }
+    });
+
+    orderBox.value = orderText.trim();
+  }
+
+  menuItems.forEach(item => {
+    const checkbox = item.querySelector(".item-check");
+    const qtyInput = item.querySelector(".item-qty");
+
+    checkbox.addEventListener("change", updateOrder);
+    qtyInput.addEventListener("input", updateOrder);
+  });
+
+});
